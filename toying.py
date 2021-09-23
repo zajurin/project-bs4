@@ -1,47 +1,66 @@
-# import phonenumbers
-# from phonenumbers import carrier, timezone, geocoder
+import openpyxl
+import requests
+import bs4
+from openpyxl  import load_workbook
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter, column_index_from_string
+from bs4 import BeautifulSoup
 
+import re
 
-
-# my_number = phonenumbers.parse("+447986123456", "GB")
-
-# print(phonenumbers.is_valid_number(my_number))
-# print(carrier.name_for_number(my_number, "en"))
-# print(timezone.time_zones_for_number(my_number))
-# print(geocoder.description_for_number(my_number, 'en'))
-
-# import phonenumbers
-
-# text_block = "Our services will cost about 2,200 USD and we will deliver the product by the 10.10.2021. For more information, you can call us at +44 7986 123456 or send an e-mail to demo@example.com"
-
-# for match in phonenumbers.PhoneNumberMatcher(text_block, "GB"):
-#     print(match)
-
-
-# import phonenumbers
-
-# text_block = "Our services will cost about 2,200 USD and we will deliver the product by the 10.10.2021. For more information you can call us at +44-7986-123456 or 020 8366 1177 send an e-mail to demo@example.com"
-
-# for match in phonenumbers.PhoneNumberMatcher(text_block, "GB"):
-#     print(match)
-
-# import phonenumbers
-# formatter = phonenumbers.AsYouTypeFormatter("TR")
-
-# import phonenumbers
-# from phonenumbers import geocoder
-
-# my_number = phonenumbers.parse("+447986123456")
-# print(geocoder.description_for_number(my_number, "en"))
-
-# import phonenumbers
-# from phonenumbers import carrier
-
-# my_number = phonenumbers.parse("+40721234567")
-# print(carrier.name_for_number(my_number, "en"))
-
+import urllib.request
 import phonenumbers
-from phonenumbers import timezone
 
-my_number = phonenumbers.parse("+523317904040")
-print(timezone.time_zones_for_number(my_number))
+
+#******* AVOID BEING BLOCKED *******
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
+
+companyName = "Caprock Academy"
+companyAddress = "headquarters"
+
+#CREATING URL FOR GOOGLE SEARCHING
+text = ("phone number of {0} {1} ".format(companyName, companyAddress))
+myCurrentURL = 'https://google.com/search?q=' + text
+
+#ACCESING TO URL's INFO
+response = requests.get(myCurrentURL, headers=headers)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# alldivs = soup.find_all('div')
+# twoNine5Div = alldivs[292]
+# segunEso = soup.find_all('div', attrs = {'class': 'liYKde g VjDLd'})
+
+# print(twoNine5Div)
+
+# utiles
+tagsSeparatedByComma = [tag.attrs for tag in soup.find_all("div")]
+searchAttrs = {'class': ['liYKde', 'g', 'VjDLd']}
+which_Index_Is_This_Tag = tagsSeparatedByComma.index(searchAttrs)# Output: index 292
+
+print(which_Index_Is_This_Tag)# tell me in which index is the tag searched
+
+# twoNine5Div92 = tagsSeparatedByComma[292]
+
+# tagsWithClasses= [str(tag) for tag in soup.find_all("div")]
+
+alldivs = soup.find_all('div')
+twoNine5Div = alldivs[which_Index_Is_This_Tag]
+for divs in twoNine5Div:
+	spans_In_Divs = divs.findChildren("span")
+	# spans_In_Divs_TO_STRING = str(spans_In_Divs)#convertir a String por si acaso
+	# matching_CompanyName = spans_In_Divs_TO_STRING.find(companyName) #Trate de sustituir el buscar con RE 
+	# if matching_CompanyName:# si companyName coincidia con el nombre en el span habria de imprimirse
+	# 	print(matching_CompanyName)
+
+
+	# matchs_Of_CompanyName = soup.findAll('span', text = re.compile(companyName))# Level 2
+	# if matchs_Of_CompanyName:
+	# 	print(matchs_Of_CompanyName)
+	# else:
+	# 	print(False)
+
+#Look for this tag
+# tagSearched = soup.find_all('span', attrs={'class': 'mw31Ze'})# Level 1
+# tagSearched2 = soup.findAll('h3', text = re.compile(companyName), attrs = {'class' : 'LC20lb DKV0Md'})# Level 2
+
+# [tag.name for tag in soup.find_all()]

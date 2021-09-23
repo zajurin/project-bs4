@@ -2,46 +2,48 @@ from urllib.request import urlopen
 from urllib.error import HTTPError, URLError
 from bs4 import BeautifulSoup
 
+from tkinter import *
+from tkinter import messagebox
 
-def gettingTitle(url):
-	try:
-		html = urlopen(url)
-	except HTTPError as e:
-		return None
-	try:
-		bsObj = BeautifulSoup(html.read())
-		title = bsObj.body.h1
-	except AttributeError as e:
-		return None
-	return title
-title = gettingTitle("http://www.pythojvnscraping.com/pages/page1.html")
-if title == None:
-	print("Title could not be found")
-else:
-	print(title)
-	# else:
-	#     program continues. Note: If you return or break in the  
-	#     exception catch, you do not need to use the "else" statement
-   
+import openpyxl
+import requests
+import bs4
+from openpyxl  import load_workbook
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter, column_index_from_string
 
- 
-# # importing modules
-# import requests
-# from urllib.error import URLError
+import re
+
+import urllib.request
+import phonenumbers
+
+from Level_1 import myCurrentURL
 
 
+try:
+	r = requests.head(myCurrentURL)
+	if r.status_code == 200:
+		print("works")
+		execfile('Level_1.py')
+	else:
+		top = Tk()
 
-# myurl = "https://www.elfinanciefsdsdfro.com.mx/"
-# # myurl = "http://www.pythonsadasdcraping.com/pages/page1.html"
- 
-# url = 'https://www.geeksforgeeks.org/page-that-do-not-exist' 
-# # url = 'https://www.geeksforgeks.org/implementing-web-scraping-python-beautiful-soup/'
- 
-# try:
-#   response = requests.get(myurl)
-#   response.raise_for_status()
-# except URLError as ue:
-#   print("The Server Could Not be Found")
-   
-# else:
-#   print("No Error")
+		top.geometry("100x100")
+
+		messagebox.showwarning("Warning", "Status code is not 200. Could fail.")
+
+		top.withdraw()
+		exit()
+		top.mainloop()
+
+    # prints the int of the status code. Find more at httpstatusrappers.com :)
+except requests.ConnectionError:
+	top = Tk()
+
+	top.geometry("100x100")
+
+	messagebox.showerror("error", "Please, verify your URL.")
+
+	top.withdraw()
+	exit()
+	top.mainloop()

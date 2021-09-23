@@ -10,7 +10,7 @@ import re
 
 import urllib.request
 import phonenumbers
-
+import pycountry
 
 #******* AVOID BEING BLOCKED *******
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
@@ -27,22 +27,43 @@ rowM = sh.max_row
 
 whichCountry = "US"
 
-for r in range(2, rowM+1):
+for r in range(2, rowM+1):# Range starts with 2 because the row position in Excel's file
     try:
         #READER OF EXCEL FILE
 
         #Company Name
+        global letter_Of_Column_With_Name_Of_Companies
         letter_Of_Column_With_Name_Of_Companies = "C"
-        letter_Of_Column_With_ADDRESS_Of_Companies = "D"        
+
+        global letter_Of_Column_With_ADDRESS_Of_Companies
+        letter_Of_Column_With_ADDRESS_Of_Companies = "D" 
+
+        global letter_Of_Column_With_COUNTRY_Of_Companies
+        letter_Of_Column_With_COUNTRY_Of_Companies = "E" 
+
         number_Of_Row_With_Name_Of_Companies = r
 
         # Must to be GLOBAL because it will be used in Reader_Constructor and will be inherited to another class instancies
-        global string_Of_number_Of_Row_With_Name_Of_Companies 
-        
-        string_Of_number_Of_Row_With_Name_Of_Companies = str(r)
+        global string_Of_number_Of_Row_With_Name_Of_Companies         
+        string_Of_number_Of_Row_With_Name_Of_Companies = str(r)#Converting "r" to string (which is type number) so that can be concatenated with variable "letter_Of_Column_With_Name_Of_Companies"
 
+        #*************** CONCATENATING COLUMNS WITH ROWS ****************
+        
+        # NAME of Company IN EXCEL
+        global concatenater_Column_With_Number_For_NAME
         concatenater_Column_With_Number_For_NAME = letter_Of_Column_With_Name_Of_Companies + string_Of_number_Of_Row_With_Name_Of_Companies
+        
+
+        # ADDRESS of Company IN EXCEL
+        global concatenater_Column_With_Number_for_ADDRESS
         concatenater_Column_With_Number_for_ADDRESS = letter_Of_Column_With_ADDRESS_Of_Companies + string_Of_number_Of_Row_With_Name_Of_Companies
+
+        # COUNTRY of Company IN EXCEL
+        global concatenater_Column_With_Number_for_COUNTRY
+        concatenater_Column_With_Number_For_COUNTRY = letter_Of_Column_With_COUNTRY_Of_Companies + string_Of_number_Of_Row_With_Name_Of_Companies
+        
+
+        # ****************** COMPLETED VALUES TO BE EXPORTED ****************** 
         global companyName
         companyName = sh[concatenater_Column_With_Number_For_NAME].value 
         
@@ -50,6 +71,9 @@ for r in range(2, rowM+1):
         companyAddress = sh[concatenater_Column_With_Number_for_ADDRESS].value
         if companyAddress is None:
             companyAddress = " headquarters"
+
+        global country_Of_companyName
+        country_Of_companyName = sh[concatenater_Column_With_Number_For_COUNTRY].value     
 
         print(companyName)#Tell me which Company was reviewed
         print(companyAddress)#Tell me the address of that one
@@ -59,8 +83,8 @@ for r in range(2, rowM+1):
                 self.x_tagSearched = x_tagSearched
 
                 for tag in self.x_tagSearched:
-                    companyPhoneNumber = tag.text.strip()
-                    letter_Of_Column_To_Put_Phone_Number = "E"
+                    companyPhoneNumber = tag.text.strip()# here must to be only_Number instead of "tag.text.strip()"
+                    letter_Of_Column_To_Put_Phone_Number = "F"
                     concatenater_Row_With_Column_For_Number = letter_Of_Column_To_Put_Phone_Number + string_Of_number_Of_Row_With_Name_Of_Companies
                     sh[concatenater_Row_With_Column_For_Number] = companyPhoneNumber
                     wb.save(filename = chooseExcel_File)
@@ -69,6 +93,7 @@ for r in range(2, rowM+1):
 
         #CREATING URL FOR GOOGLE SEARCHING
         text = ("phone number of {0} {1} ".format(companyName, companyAddress))
+        
         global myCurrentURL
         myCurrentURL = 'https://google.com/search?q=' + text
 
@@ -102,5 +127,3 @@ for r in range(2, rowM+1):
   
     except:
         print("Something went wrong")
-
-        
