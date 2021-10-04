@@ -9,11 +9,14 @@ from openpyxl  import load_workbook
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter, column_index_from_string
 
-
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
 whichCountry = "US" # this variable MUST BE DINAMIC FROM Excel
 
-companyName = 'Loveland Classical Schools' 
+companyName = 'Flagstaff Academy Inc' 
+
+
+# WRITING IN EXCEL FILE
+
 
 #CREATING URL FOR GOOGLE SEARCHING
 text = ("phone number of {0} headquarters ".format(companyName))
@@ -38,7 +41,6 @@ for divs in search_Each_div_Container:
 		for each_SPAN in chaotic_SPAN:
 			new_SPAN_That_Needs_To_Be_STRING = str(each_SPAN)
 			for match in phonenumbers.PhoneNumberMatcher(new_SPAN_That_Needs_To_Be_STRING, whichCountry):
-				only_Number = phonenumbers.format_number(match.number, phonenumbers.PhoneNumberFormat.E164)
+				global only_Number
+				only_Number = phonenumbers.format_number(match.number, phonenumbers.PhoneNumberFormat.E164)				
 				print(only_Number)
-
-
