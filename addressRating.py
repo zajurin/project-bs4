@@ -15,7 +15,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleW
 
 
 #******* WORKING WITH EXCEL *******
-chooseExcel_File = "C:\\Users\\rosenberg\\Desktop\\withPython\\PracticeBS4\\p1\\src\\myAddresses.xlsx"
+chooseExcel_File = "C:\\Users\\rosenberg\\Desktop\\withPython\\PracticeBS4\\p1\\src\\myPhonenumbers.xlsx"
 choose_SHEET_Of_Your_Excel_File = 'Hoja1'
 
 wb = load_workbook(chooseExcel_File, data_only=True)
