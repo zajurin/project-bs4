@@ -16,7 +16,6 @@ import re
 
 import urllib.request
 import phonenumbers
-
 from Level_1 import myCurrentURL
 
 
