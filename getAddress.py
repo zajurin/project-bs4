@@ -12,7 +12,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleW
 
 
 #******* WORKING WITH EXCEL *******
-chooseExcel_File = "C:\\Users\\rosenberg\\Desktop\\withPython\\PracticeBS4\\p1\\src\\myAddresses.xlsx"
+chooseExcel_File = "C:\\Users\\rosenberg\\Desktop\\withPython\\PracticeBS4\\p1\\src\\myPhonenumbers.xlsx"
 choose_SHEET_Of_Your_Excel_File = 'Hoja1'
 
 wb = load_workbook(chooseExcel_File, data_only=True)
@@ -47,7 +47,6 @@ for r in range(2, rowM+1):
             letter_Of_Column_To_Put_Addres = "D"
             concatenater_Row_With_Column = letter_Of_Column_To_Put_Addres + string_Of_number_Of_Row_With_Name_Of_Companies
             sh[concatenater_Row_With_Column] = companyAddress
-            wb.save(filename = chooseExcel_File)
-  
+            wb.save(filename = chooseExcel_File)  
     except:
         print("Something went wrong")
