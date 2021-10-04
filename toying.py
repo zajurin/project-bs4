@@ -52,7 +52,6 @@ for divs in twoNine5Div:
 	# if matching_CompanyName:# si companyName coincidia con el nombre en el span habria de imprimirse
 	# 	print(matching_CompanyName)
 
-
 	# matchs_Of_CompanyName = soup.findAll('span', text = re.compile(companyName))# Level 2
 	# if matchs_Of_CompanyName:
 	# 	print(matchs_Of_CompanyName)
