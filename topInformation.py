@@ -53,7 +53,6 @@ children = all_My_H3.findChildren('span', recursive=False)
 for child in children:
     print(children)
 
-
 # tagSearched2 = soup.findAll('h3', text = re.compile("Caprock Academy"), attrs = {'class' : 'LC20lb DKV0Md'})# Level 2
 
 # if tagSearched2:
